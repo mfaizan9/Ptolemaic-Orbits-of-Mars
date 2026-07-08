@@ -1,0 +1,117 @@
+/* ---------------------------------------------------------------------------
+   Ptolemaic Orbit of Mars — sim-specific styles only.
+   Shared palette/layout come from foundation/kl-unl.css (never edited here).
+   --------------------------------------------------------------------------- */
+
+/* Comfortable, zoomable base type (>=1.125rem floor, rem-based) */
+body {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+/* Diagram on the left (wide), info panel on the right (narrow) to mirror the
+   original Flash layout. Overrides the foundation's 25rem+1fr ordering, but we
+   re-declare the foundation's own 56rem collapse below so it still stacks. */
+.app-layout {
+  grid-template-columns: 1fr;   /* single column: diagram stacked above the controls */
+  gap: 0.75rem;
+  padding: 0.5rem;
+  align-items: start;
+}
+
+.panel {
+  padding: 0.75rem 1rem 1rem;
+}
+
+/* One unified box: diagram on top, controls below, in a single .panel */
+.sim-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* --- Diagram area ---------------------------------------------------------- */
+.sim-card__diagram .panel__canvas-wrap {
+  line-height: 0;
+}
+
+#stage {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 36rem;      /* keeps the square diagram from getting huge on desktop */
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;   /* backing store is 580x580; CSS scales it */
+  touch-action: manipulation;
+}
+
+/* --- Controls area --------------------------------------------------------- */
+.sim-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.info-intro {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.speed-controls {
+  padding: 0;
+  margin: 0;
+}
+
+.control-fieldset__legend {
+  font-size: 1.125rem;
+  padding-bottom: 0.75rem;
+}
+
+.motion-row {
+  justify-content: flex-start;
+  margin-bottom: 0.9rem;
+}
+
+/* Slider with flanking slow / fast labels on a shared baseline */
+.slider-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.slider-end {
+  font-size: 1rem;
+  color: var(--foreground-color, #1a1a1a);
+  white-space: nowrap;
+}
+
+.speed-slider {
+  width: 100%;
+  min-width: 0;
+  height: 1.75rem;        /* comfortable, >=44px touch target via padding below */
+  cursor: pointer;
+  accent-color: var(--button-background-color, #005a9c);
+}
+
+/* Enlarge the range thumb hit area a touch for touch devices */
+.speed-slider {
+  padding: 0.5rem 0;
+}
+
+/* --- Responsive: tighten spacing on narrow / phone-portrait widths --------- */
+@media (max-width: 56rem) {
+  #stage {
+    max-width: 32rem;
+  }
+  .sim-card,
+  .sim-card__info {
+    gap: 1rem;
+  }
+}
+
+/* Honor reduced-motion: nothing here animates via CSS, but keep the canvas from
+   implying motion — the JS also starts paused when this is set. */
+@media (prefers-reduced-motion: reduce) {
+  #stage { scroll-behavior: auto; }
+}

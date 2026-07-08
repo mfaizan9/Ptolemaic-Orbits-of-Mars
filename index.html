@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--
+  Ptolemaic Orbit of Mars — accessible HTML5 rebuild of the ClassAction Flash sim.
+  Behavior ported verbatim from the decompiled ActionScript (marsOrbit005.swf);
+  chrome/layout use the shared KL-UNL foundation. Must be served over HTTP (see README.md).
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ptolemaic Orbit of Mars</title>
+  <link rel="stylesheet" href="foundation/kl-unl.css">
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+
+  <main class="app-shell">
+
+    <kl-unl-masthead sim-id="marsorbit" json-url="foundation/contents.json"></kl-unl-masthead>
+
+    <!-- Screen-reader live region: announces control changes with units/context -->
+    <p id="sr-status" class="sr-only" aria-live="polite"></p>
+
+    <div class="app-layout">
+
+      <!-- One unified box holding the diagram and the controls -->
+      <div class="panel sim-card">
+
+        <!-- the animated Ptolemaic diagram -->
+        <section class="sim-card__diagram" aria-labelledby="diagram-heading">
+          <h2 id="diagram-heading" class="sr-only">Ptolemaic model diagram</h2>
+          <div class="panel__canvas-wrap">
+            <canvas id="stage" width="580" height="580"
+                    role="img" aria-describedby="diagram-desc"></canvas>
+          </div>
+          <!-- Text equivalent of the canvas for assistive technology -->
+          <p id="diagram-desc" class="sr-only">
+            Diagram of Ptolemy's Earth-centered model for the orbit of Mars. Earth is a blue
+            dot at the center. Mars, the red dot, travels around a small circle called the
+            epicycle; the center of that epicycle travels around a larger circle called the
+            deferent. Combined, these motions trace the looping red path that reproduces the
+            apparent retrograde motion of Mars in the sky. A yellow dot on the gray circle
+            marks the mean Sun, which shares the epicycle's turning rate.
+          </p>
+        </section>
+
+        <!-- description + speed control -->
+        <section class="sim-card__info" aria-labelledby="info-heading">
+          <h2 id="info-heading" class="sr-only">About and controls</h2>
+
+          <p class="info-intro">This animation shows Ptolemy's model for the orbit of Mars.</p>
+
+          <fieldset class="control-fieldset speed-controls">
+            <legend class="control-fieldset__legend">animation speed:</legend>
+
+            <div class="button-row motion-row">
+              <button type="button" id="playPauseBtn" class="button">Pause</button>
+            </div>
+
+            <div class="slider-row">
+              <span class="slider-end" aria-hidden="true">slow</span>
+              <input type="range" id="speedSlider" class="control-row__slider speed-slider"
+                     min="0" max="0.08" step="0.0001" value="0.01"
+                     aria-label="Animation speed">
+              <span class="slider-end" aria-hidden="true">fast</span>
+            </div>
+          </fieldset>
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+
+  <script src="foundation/kl-unl.js"></script>
+  <script src="foundation/kl-unl-masthead.js"></script>
+  <script src="simulation.js"></script>
+</body>
+</html>
